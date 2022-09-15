@@ -4,6 +4,7 @@
       <th>No</th>
       <!-- <th>ID Pelanggan</th> -->
       <th>Nama Pelanggan</th>
+      <th>Jenis Kelamin</th>
       <th>Nomor Telepon</th>
       <th>Alamat</th>
       <th>Aksi</th>
@@ -15,15 +16,16 @@
       <td><%= i + 1 %></td>
       <!-- <td><%= pelanggan[i]._id %></td> -->
       <td><%= pelanggan[i].name %></td>
+      <td><%= pelanggan[i].jenisKelamin %></td>
       <td><%= pelanggan[i].tel %></td>
       <td style="width: 500px"><%= pelanggan[i].address %></td>
       <td>
         <form action="/pelanggan/hapus/<%= pelanggan[i]._id %>?_method=DELETE" method="post">
-          <a href="/pelanggan/ubah/<%= pelanggan[i]._id %> " class="btn btn-warning">
+          <a href="/pelanggan/ubah/<%= pelanggan[i]._id %> " class="btn btn-sm btn-warning mb-1 mt-1">
             <i class="fas fa-pencil-alt"></i>
             Ubah
           </a>
-          <button class="btn btn-danger">
+          <button class="btn btn-sm btn-danger mb-1 mt-1">
             <i class="fas fa-trash"></i>
             Hapus
           </button>

@@ -20,8 +20,8 @@ module.exports = {
   },
   actionCreate: async (req, res) => {
     try {
-      const { name, tel, address } = req.body;
-      let pelanggan = await Pelanggan({ name, tel, address });
+      const { name, jenisKelamin, tel, address } = req.body;
+      let pelanggan = await Pelanggan({ name, jenisKelamin, tel, address });
 
       await pelanggan.save();
 
@@ -45,13 +45,13 @@ module.exports = {
   actionEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, tel, address } = req.body;
+      const { name, jenisKelamin, tel, address } = req.body;
 
       await Pelanggan.findByIdAndUpdate(
         {
           _id: id,
         },
-        { name, tel, address }
+        { name, jenisKelamin, tel, address }
       );
 
       res.redirect("/pelanggan");

@@ -5,6 +5,10 @@ let pelangganSchema = mongoose.Schema({
     type: String,
     require: [true, "Nama pelanggan harus diisi"],
   },
+  jenisKelamin: {
+    type: String,
+    require: [true, "Jenis Kelamin harus diisi"],
+  },
   tel: {
     type: String,
     // min: [6, "No telepon terlalu sedikit"],
