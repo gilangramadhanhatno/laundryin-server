@@ -1,11 +1,11 @@
-const Pelanggan = require("./model");
+const Paket = require("./model");
 
 module.exports = {
   index: async (req, res) => {
     try {
-      const pelanggan = await Pelanggan.find();
-      res.render("admin/pelanggan/view_pelanggan", {
-        pelanggan,
+      const paket = await Paket.find();
+      res.render("admin/paket/view_paket", {
+        paket,
       });
     } catch (error) {
       console.log(error);
@@ -13,19 +13,19 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
-      res.render("admin/pelanggan/tambah_pelanggan");
+      res.render("admin/paket/tambah_paket");
     } catch (error) {
       console.log(error);
     }
   },
   actionCreate: async (req, res) => {
     try {
-      const { name, jenisKelamin, tel, address } = req.body;
-      let pelanggan = await Pelanggan({ name, jenisKelamin, tel, address });
+      const { name, waktuKerja, harga } = req.body;
+      let paket = await Paket({ name, waktuKerja, harga });
 
-      await pelanggan.save();
+      await paket.save();
 
-      res.redirect("/pelanggan");
+      res.redirect("/paket");
     } catch (error) {
       console.log(error);
     }
@@ -33,10 +33,10 @@ module.exports = {
   viewEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const pelanggan = await Pelanggan.findOne({ _id: id });
+      const paket = await Paket.findOne({ _id: id });
 
-      res.render("admin/pelanggan/ubah_pelanggan", {
-        pelanggan,
+      res.render("admin/paket/ubah_paket", {
+        paket,
       });
     } catch (error) {
       console.log(error);
@@ -45,16 +45,16 @@ module.exports = {
   actionEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, jenisKelamin, tel, address } = req.body;
+      const { name, waktuKerja, harga } = req.body;
 
-      await Pelanggan.findByIdAndUpdate(
+      await Paket.findByIdAndUpdate(
         {
           _id: id,
         },
-        { name, jenisKelamin, tel, address }
+        { name, waktuKerja, harga }
       );
 
-      res.redirect("/pelanggan");
+      res.redirect("/paket");
     } catch (error) {
       console.log(error);
     }
@@ -63,11 +63,11 @@ module.exports = {
     try {
       const { id } = req.params;
 
-      await Pelanggan.findOneAndRemove({
+      await Paket.findOneAndRemove({
         _id: id,
       });
 
-      res.redirect("/pelanggan");
+      res.redirect("/paket");
     } catch (error) {
       console.log(error);
     }
