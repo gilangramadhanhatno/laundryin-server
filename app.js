@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const dashboardRouter = require("./app/dashboard/router");
 const pelangganRouter = require("./app/pelanggan/router");
 const paketRouter = require("./app/paket/router");
+const transaksiLaundryRouter = require("./app/transaksi-laundry/router");
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use("/adminlte", express.static(path.join(__dirname, "/node_modules/admin-lt
 app.use("/", dashboardRouter);
 app.use("/pelanggan", pelangganRouter);
 app.use("/paket", paketRouter);
+app.use("/transaksi-laundry", transaksiLaundryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,0 +1,157 @@
+<%- include("../../partials/header.ejs") %> <%- include("../../partials/navbar.ejs") %> <%- include("../../partials/sidebar.ejs") %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Transaksi Laundry</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/transaksi-laundry">Transaksi Laundry</a></li>
+            <li class="breadcrumb-item active">Ubah</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <!-- <div class="card-header"></div> -->
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <!-- left column -->
+                <div class="col">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Form Ubah Transaksi Laundry</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="/transaksi-laundry/ubah/<%= transaksiLaundry._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+                      <div class="card-body">
+                        <div class="form-group">
+                            <label>Pelanggan</label>
+                            <select class="form-control select2" style="width: 100%;" name="pelanggan" required>
+                              <option selected="selected">Pilih pelanggan</option>
+                              <% pelanggan.forEach(pelanggan => { %>
+                              <option value="<%= pelanggan._id %>" 
+                                <% if(pelanggan._id.toString() === transaksiLaundry?.pelanggan?._id.toString()) { %>
+                                    selected
+                                    <% } %> 
+                                >
+                                    <%= pelanggan.name %> 
+                            </option>
+                              <% }) %>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Paket Laundry</label>
+                            <select class="form-control select2" style="width: 100%" name="paket" required>
+                              <option selected="selected">Pilih paket laundry</option>
+                              <% paket.forEach(paket => { %>
+                              <option value="<%= paket._id %>"
+                                <% if(paket._id.toString() === transaksiLaundry?.paket?._id.toString()) { %>
+                                    selected
+                                    <% } %> 
+                                >
+                                <%= paket.name %> - <%= paket.waktuKerja %> - <%= paket.harga %>
+                                </option>
+                              <% }) %>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="jumlahKiloan">Jumlah Kiloan</label>
+                            <input type="number" class="form-control" name="jumlahKiloan" id="jumlahKiloan" placeholder="Masukkan jumlah kiloan ..." required value="<%= transaksiLaundry.jumlahKiloan %>" />
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <label for="total">Total Harga</label>
+                            <input type="number" class="form-control" name="total" id="total" 
+                            placeholder="<% if (transaksiLaundry.kiloan === true) { %>
+                                <%= paket.harga * transaksiLaundry.kiloan %> 
+                            <% } %> " readonly />
+                        </div> -->
+
+                        <!-- Date and time -->
+                        <div class="form-group">
+                            <label>Tanggal Terima:</label>
+                            <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                <input type="text" name="tanggalTerima" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="<%= transaksiLaundry.tanggalTerima %> "/>
+                                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <div class="form-group">
+                            <label for="catatan">Catatan</label>
+                            <textarea class="form-control" name="catatan" rows="3" placeholder="Masukkan catatan ..." ><%= transaksiLaundry.catatan %> </textarea>
+                          </div>
+
+                        <div class="form-group">
+                            <label for="image">Gambar</label>
+                            <input type="file" name="image" class="form-control" id="image" placeholder="Masukkan gambar" />
+                            <br />
+                            <img width="20%" height="20%" src="http://localhost:3000/uploads/<%= transaksiLaundry.thumbnail %>" id="preview" alt="thumbnail" />
+                          </div>
+                        
+                      </div>
+                      <!-- /.card-body -->
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card -->
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<%- include("../../partials/footer.ejs") %> <%- include("../../partials/js.ejs") %>
+
+
+<script>
+  function readUrl(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        $("#preview").attr("src", e.target.result);
+        $("#preview").attr("width", "20%");
+        $("#preview").attr("height", "20%");
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function () {
+    readUrl(this);
+  });
+</script>
