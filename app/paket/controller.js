@@ -12,6 +12,7 @@ module.exports = {
       res.render("admin/paket/view_paket", {
         paket,
         alert,
+        title: "Laundryin | Paket",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -22,7 +23,9 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
-      res.render("admin/paket/tambah_paket");
+      res.render("admin/paket/tambah_paket", {
+        title: "Laundryin | Tambah Paket",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -55,6 +58,7 @@ module.exports = {
 
       res.render("admin/paket/ubah_paket", {
         paket,
+        title: "Laundryin | Ubah Paket",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

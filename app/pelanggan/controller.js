@@ -13,7 +13,7 @@ module.exports = {
       res.render("admin/pelanggan/view_pelanggan", {
         pelanggan,
         alert,
-        title: "Halaman Pelanggan",
+        title: "Laundryin | Pelanggan",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -24,7 +24,9 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
-      res.render("admin/pelanggan/tambah_pelanggan");
+      res.render("admin/pelanggan/tambah_pelanggan", {
+        title: "Laundryin | Tambah Pelanggan",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -57,6 +59,7 @@ module.exports = {
 
       res.render("admin/pelanggan/ubah_pelanggan", {
         pelanggan,
+        title: "Laundryin | Ubah Pelanggan",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

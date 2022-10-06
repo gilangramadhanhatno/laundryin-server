@@ -18,6 +18,7 @@ module.exports = {
       res.render("admin/transaksi_laundry/view_transaksi_laundry", {
         transaksiLaundry,
         alert,
+        title: "Laundryin | Transaksi Laundry",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -36,6 +37,7 @@ module.exports = {
         transaksiLaundry,
         pelanggan,
         paket,
+        title: "Laundryin | Tambah Transaksi Laundry",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -119,6 +121,7 @@ module.exports = {
         pelanggan,
         paket,
         transaksiLaundry,
+        title: "Laundryin | Ubah Transaksi Laundry",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -205,7 +208,7 @@ module.exports = {
     try {
       const { id } = req.params;
 
-      const transaksiLaundry = await TransaksiLaundry.findOneAndRemove({ _id: id });
+      await TransaksiLaundry.findOneAndRemove({ _id: id });
 
       req.flash("alertMessage", "Berhasil hapus transaksi laundry");
       req.flash("alertStatus", "success");
