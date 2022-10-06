@@ -9,12 +9,21 @@ const config = require("../../config");
 module.exports = {
   index: async (req, res) => {
     try {
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alertIcon = req.flash("alertIcon");
+      const alert = { message: alertMessage, status: alertStatus, icon: alertIcon };
+
       const transaksiLaundry = await TransaksiLaundry.find().populate("pelanggan").populate("paket");
       res.render("admin/transaksi_laundry/view_transaksi_laundry", {
         transaksiLaundry,
+        alert,
       });
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
     }
   },
   viewCreate: async (req, res) => {
@@ -29,7 +38,10 @@ module.exports = {
         paket,
       });
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
     }
   },
   actionCreate: async (req, res) => {
@@ -59,8 +71,15 @@ module.exports = {
             });
 
             await transaksiLaundry.save();
+
+            req.flash("alertMessage", "Berhasil tambah transaksi laundry");
+            req.flash("alertStatus", "success");
+            req.flash("alertIcon", "fas fa-check");
             res.redirect("/transaksi-laundry");
           } catch (error) {
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", "danger");
+            req.flash("alertIcon", "fas fa-ban");
             res.redirect("/transaksi-laundry");
           }
         });
@@ -74,10 +93,17 @@ module.exports = {
         });
 
         await transaksiLaundry.save();
+
+        req.flash("alertMessage", "Berhasil tambah transaksi laundry");
+        req.flash("alertStatus", "success");
+        req.flash("alertIcon", "fas fa-check");
         res.redirect("/transaksi-laundry");
       }
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
     }
   },
 
@@ -95,7 +121,10 @@ module.exports = {
         transaksiLaundry,
       });
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
     }
   },
 
@@ -136,8 +165,14 @@ module.exports = {
               }
             );
 
+            req.flash("alertMessage", "Berhasil ubah transaksi laundry");
+            req.flash("alertStatus", "success");
+            req.flash("alertIcon", "fas fa-check");
             res.redirect("/transaksi-laundry");
           } catch (error) {
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", "danger");
+            req.flash("alertIcon", "fas fa-ban");
             res.redirect("/transaksi-laundry");
           }
         });
@@ -153,9 +188,15 @@ module.exports = {
           }
         );
 
+        req.flash("alertMessage", "Berhasil ubah transaksi laundry");
+        req.flash("alertStatus", "success");
+        req.flash("alertIcon", "fas fa-check");
         res.redirect("/transaksi-laundry");
       }
     } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
       res.redirect("/transaksi-laundry");
     }
   },
@@ -166,9 +207,15 @@ module.exports = {
 
       const transaksiLaundry = await TransaksiLaundry.findOneAndRemove({ _id: id });
 
+      req.flash("alertMessage", "Berhasil hapus transaksi laundry");
+      req.flash("alertStatus", "success");
+      req.flash("alertIcon", "fas fa-check");
       res.redirect("/transaksi-laundry");
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
     }
   },
 };
