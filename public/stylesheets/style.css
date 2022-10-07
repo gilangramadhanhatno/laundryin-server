@@ -15,3 +15,7 @@ a {
   user-select: none;
   -webkit-user-select: none;
 }
+
+.btn-status {
+  margin-left: 0px;
+}

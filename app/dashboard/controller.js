@@ -2,7 +2,7 @@ module.exports = {
   index: async (req, res) => {
     try {
       res.render("index", {
-        title: "Laundry | Dashboard",
+        title: "Laundryin | Dashboard",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

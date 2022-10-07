@@ -13,18 +13,14 @@ let transaksiLaundrySchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  // total: {
-  //   type: Number,
-  //   require: [true, "Total harga harus diisi"],
-  // },
   tanggalTerima: {
     type: String,
     require: [true, "Tanggal terima laundry harus diisi"],
   },
   status: {
     type: String,
-    enum: ["Belum Bayar", "Sudah Bayar"],
-    default: "Belum Bayar",
+    enum: ["Sedang Diproses", "Belum Bayar", "Sudah Bayar"],
+    default: "Sedang Diproses",
   },
   thumbnail: {
     type: String,

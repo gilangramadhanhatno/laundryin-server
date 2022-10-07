@@ -221,4 +221,68 @@ module.exports = {
       res.redirect("/transaksi-laundry");
     }
   },
+  viewDetail: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alertIcon = req.flash("alertIcon");
+      const alert = { message: alertMessage, status: alertStatus, icon: alertIcon };
+
+      const pelanggan = await Pelanggan.find();
+      const paket = await Paket.find();
+      const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
+
+      res.render("admin/transaksi_laundry/detail_transaksi_laundry", {
+        transaksiLaundry,
+        pelanggan,
+        paket,
+        alert,
+        title: "Laundryin | Detail Transaksi Laundryin",
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect("/transaksi-laundry");
+    }
+  },
+  actionKonfirmasi: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
+      transaksiLaundry.status = "Sudah Bayar";
+      await transaksiLaundry.save();
+
+      req.flash("alertMessage", `Berhasil konfirmasi transaksi laundry ${transaksiLaundry.pelanggan.name}`);
+      req.flash("alertStatus", "success");
+      req.flash("alertIcon", "fas fa-check");
+      res.redirect(`/transaksi-laundry/detail/${id}`);
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect(`/transaksi-laundry/${id}`);
+    }
+  },
+  actionTolak: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
+
+      transaksiLaundry.status = "Belum Bayar";
+      await transaksiLaundry.save();
+
+      req.flash("alertMessage", `Berhasil tolak transaksi laundry ${transaksiLaundry.pelanggan.name}`);
+      req.flash("alertStatus", "success");
+      req.flash("alertIcon", "fas fa-check");
+      res.redirect(`/transaksi-laundry/detail/${id}`);
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      req.flash("alertIcon", "fas fa-ban");
+      res.redirect(`/transaksi-laundry/${id}`);
+    }
+  },
 };

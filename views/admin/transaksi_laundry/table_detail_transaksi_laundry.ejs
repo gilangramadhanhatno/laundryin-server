@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">
+      <a href="/transaksi-laundry" class="btn btn-warning">
+        <i class="nav-icon fas fa-angle-left"> </i>
+        Kembali
+      </a>
+    </h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="http://localhost:3000/uploads/<%= transaksiLaundry.thumbnail %>" alt="image" style="width: 300px; display: block" />
+
+        <div class="row btn-status mt-3">
+          <% if(transaksiLaundry.status === "Sedang Diproses") { %>
+          <form action="/transaksi-laundry/status/<%= transaksiLaundry.id %>/konfirmasi?_method=PUT" method="post">
+            <button type="submit" class="btn btn-success btn-sm">
+              <i class="fas fa-check"></i>
+              Terima
+            </button>
+          </form>
+          <form action="/transaksi-laundry/status/<%= transaksiLaundry.id %>/tolak?_method=PUT" method="post">
+            <button type="submit" class="btn btn-danger btn-sm ml-2">
+              <i class="fas fa-times"></i>
+              Tolak
+            </button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTableActivity" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Nama Pelanggan</th>
+                <th>Paket Laundry dan Jumlah Kiloan</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><%= transaksiLaundry.pelanggan.name %></td>
+              <td><%= transaksiLaundry.paket.name %> - <%= transaksiLaundry.paket.waktuKerja %> - Rp.<%= transaksiLaundry.paket.harga %> * <%= transaksiLaundry.jumlahKiloan %> kg</td>
+              <td>Rp.<%= transaksiLaundry.paket.harga * transaksiLaundry.jumlahKiloan %></td>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered mt-4" id="dataTableActivity" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Tanggal Terima</th>
+                <th>Status</th>
+                <th>Catatan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><%= transaksiLaundry.tanggalTerima %></td>
+              <td>
+                <% if(transaksiLaundry.status === "Belum Bayar") { %>
+                <h6>
+                  <span class="badge badge-danger">Belum Bayar</span>
+                </h6>
+                <% } else if (transaksiLaundry.status === "Sedang Diproses") { %>
+                <h6>
+                  <span class="badge badge-warning">Sedang Diproses</span>
+                </h6>
+                <% } else { %>
+                <h6>
+                  <span class="badge badge-success">Sudah Bayar</span>
+                </h6>
+                <% } %>
+              </td>
+              <td><% if(transaksiLaundry.catatan) { %> <%= transaksiLaundry.catatan %> <% } else { %> - <% } %></td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>
