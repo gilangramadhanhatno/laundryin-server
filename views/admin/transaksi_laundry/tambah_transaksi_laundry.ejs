@@ -24,6 +24,7 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
+      <%- include("../../partials/message.ejs") %> 
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -47,7 +48,7 @@
                             <select class="form-control select2" style="width: 100%;" name="pelanggan" required>
                               <option selected="selected" disabled>Pilih pelanggan</option>
                               <% pelanggan.forEach(pelanggan => { %>
-                              <option value="<%= pelanggan._id %>"><%= pelanggan.name %></option>
+                              <option value="<%= pelanggan._id %>"><%= pelanggan.name %> - <%= pelanggan.tel %> </option>
                               <% }) %>
                             </select>
                           </div>
@@ -63,7 +64,7 @@
 
                           <div class="form-group">
                             <label for="jumlahKiloan">Jumlah Kiloan</label>
-                            <input type="number" class="form-control" name="jumlahKiloan" id="jumlahKiloan" placeholder="Masukkan jumlah kiloan ..." required />
+                            <input type="text" class="form-control" name="jumlahKiloan" id="jumlahKiloan" placeholder="Masukkan jumlah kiloan ..." required />
                         </div>
 
                         <!-- <div class="form-group">
@@ -77,8 +78,8 @@
                         <!-- Date and time -->
                         <div class="form-group">
                             <label>Tanggal Terima:</label>
-                            <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                <input type="text" name="tanggalTerima" class="form-control datetimepicker-input" data-target="#reservationdatetime"/>
+                            <div class="input-group date" id="reservationdatetime" data-target-input="nearest" >
+                                <input type="text" name="tanggalTerima" class="form-control datetimepicker-input" data-target="#reservationdatetime" required/>
                                 <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>

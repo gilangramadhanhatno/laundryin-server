@@ -42,8 +42,8 @@
             </thead>
             <tbody>
               <td><%= transaksiLaundry.pelanggan.name %></td>
-              <td><%= transaksiLaundry.paket.name %> - <%= transaksiLaundry.paket.waktuKerja %> - Rp.<%= transaksiLaundry.paket.harga %> * <%= transaksiLaundry.jumlahKiloan %> kg</td>
-              <td>Rp.<%= transaksiLaundry.paket.harga * transaksiLaundry.jumlahKiloan %></td>
+              <td><%= transaksiLaundry.paket.name %> - <%= transaksiLaundry.paket.waktuKerja %> - Rp.<%= parseInt(transaksiLaundry.paket.harga).toLocaleString("id-ID") %> * <%= transaksiLaundry.jumlahKiloan %> kg</td>
+              <td>Rp.<%= parseInt(transaksiLaundry.paket.harga * transaksiLaundry.jumlahKiloan).toLocaleString("id-ID") %></td>
             </tbody>
           </table>
 

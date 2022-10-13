@@ -4,18 +4,21 @@ let transaksiLaundrySchema = mongoose.Schema({
   pelanggan: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Pelanggan",
+    required: [true, "Nama pelanggan harus diisi"],
   },
   paket: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Paket",
+    required: [true, "Paket harus diisi"],
   },
   jumlahKiloan: {
     type: Number,
     default: 0,
+    required: [true, "Jumlah kiloan harus diisi"],
   },
   tanggalTerima: {
     type: String,
-    require: [true, "Tanggal terima laundry harus diisi"],
+    required: [true, "Tanggal terima laundry harus diisi"],
   },
   status: {
     type: String,
@@ -24,6 +27,7 @@ let transaksiLaundrySchema = mongoose.Schema({
   },
   thumbnail: {
     type: String,
+    required: [true, "Gambar pakaian(kiloan) harus diisi"],
   },
   catatan: {
     type: String,

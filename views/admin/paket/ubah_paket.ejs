@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="harga">Harga/</label>
-                            <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan harga ..." required value="<%= paket.harga %>" />
+                            <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan harga ..." required value="<%= parseInt(paket.harga).toLocaleString("id-ID") %>" />
                         </div>
                         
                       </div>

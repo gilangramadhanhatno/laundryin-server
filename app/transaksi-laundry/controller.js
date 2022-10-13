@@ -29,6 +29,11 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alertIcon = req.flash("alertIcon");
+      const alert = { message: alertMessage, status: alertStatus, icon: alertIcon };
+
       const transaksiLaundry = await TransaksiLaundry.find();
       const pelanggan = await Pelanggan.find();
       const paket = await Paket.find();
@@ -37,6 +42,7 @@ module.exports = {
         transaksiLaundry,
         pelanggan,
         paket,
+        alert,
         title: "Laundryin | Tambah Transaksi Laundry",
       });
     } catch (error) {
@@ -82,7 +88,7 @@ module.exports = {
             req.flash("alertMessage", `${error.message}`);
             req.flash("alertStatus", "danger");
             req.flash("alertIcon", "fas fa-ban");
-            res.redirect("/transaksi-laundry");
+            res.redirect("/transaksi-laundry/tambah");
           }
         });
       } else {
@@ -105,7 +111,7 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       req.flash("alertIcon", "fas fa-ban");
-      res.redirect("/transaksi-laundry");
+      res.redirect("/transaksi-laundry/tambah");
     }
   },
 

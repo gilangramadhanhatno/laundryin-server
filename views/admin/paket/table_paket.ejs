@@ -17,7 +17,7 @@
       <td><%= i + 1 %></td>
       <td><%= paket[i].name %></td>
       <td><%= paket[i].waktuKerja %></td>
-      <td><%= paket[i].harga %></td>
+      <td>Rp.<%= parseInt(paket[i].harga).toLocaleString("id-ID") %></td>
       <td>
         <form action="/paket/hapus/<%= paket[i]._id %>?_method=DELETE" method="post">
           <a href="/paket/ubah/<%= paket[i]._id %> " class="btn btn-sm btn-warning mb-1 mt-1">

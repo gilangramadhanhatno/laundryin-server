@@ -15,13 +15,12 @@
   </thead>
   <tbody>
     <% for(let i = 0; i < transaksiLaundry.length; i++) { %>
-    <tr>
       <td><%= i + 1 %></td>
       <!-- <td><%= transaksiLaundry[i]._id %></td> -->
       <td><%= transaksiLaundry[i]?.pelanggan?.name ?? "-" %></td>
-      <td><%= transaksiLaundry[i]?.paket?.name %> - <%= transaksiLaundry[i]?.paket?.waktuKerja%> - Rp.<%= transaksiLaundry[i]?.paket?.harga %> * <%= transaksiLaundry[i].jumlahKiloan %> kg</td>
+      <td><%= transaksiLaundry[i]?.paket?.name %> - <%= transaksiLaundry[i]?.paket?.waktuKerja%> - Rp.<%= parseInt(transaksiLaundry[i]?.paket?.harga).toLocaleString("id-ID") %> * <%= transaksiLaundry[i].jumlahKiloan %> kg</td>
       <!-- <td>        kg</td> -->
-      <td>Rp.<%= transaksiLaundry[i].jumlahKiloan * transaksiLaundry[i]?.paket?.harga %></td>
+      <td>Rp.<%= parseInt(transaksiLaundry[i].jumlahKiloan * transaksiLaundry[i]?.paket?.harga).toLocaleString("id-ID") %></td>
       <td><%= transaksiLaundry[i].tanggalTerima%></td>
       <!-- <td><%= transaksiLaundry[i].status %></td> -->
       <!-- <td><%= transaksiLaundry[i].catatan %></td> -->

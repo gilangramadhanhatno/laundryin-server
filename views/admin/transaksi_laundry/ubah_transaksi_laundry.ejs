@@ -67,7 +67,7 @@
                                     selected
                                     <% } %> 
                                 >
-                                <%= paket.name %> - <%= paket.waktuKerja %> - <%= paket.harga %>
+                                <%= paket.name %> - <%= paket.waktuKerja %> - Rp.<%= parseInt(paket.harga).toLocaleString("id-ID") %>
                                 </option>
                               <% }) %>
                             </select>
@@ -75,7 +75,7 @@
 
                           <div class="form-group">
                             <label for="jumlahKiloan">Jumlah Kiloan</label>
-                            <input type="number" class="form-control" name="jumlahKiloan" id="jumlahKiloan" placeholder="Masukkan jumlah kiloan ..." required value="<%= transaksiLaundry.jumlahKiloan %>" />
+                            <input type="text" class="form-control" name="jumlahKiloan" id="jumlahKiloan" placeholder="Masukkan jumlah kiloan ..." required value="<%= transaksiLaundry.jumlahKiloan %>" />
                         </div>
 
                         <!-- <div class="form-group">
