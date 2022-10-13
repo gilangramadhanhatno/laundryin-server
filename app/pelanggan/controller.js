@@ -124,7 +124,7 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       req.flash("alertIcon", "fas fa-ban");
-      res.redirect("/pelanggan");
+      res.redirect(`/pelanggan/ubah/${id}`);
     }
   },
   actionDelete: async (req, res) => {

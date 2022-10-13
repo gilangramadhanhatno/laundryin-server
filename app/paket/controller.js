@@ -48,7 +48,7 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       req.flash("alertIcon", "fas fa-ban");
-      res.redirect("/paket");
+      res.redirect("/paket/tambah");
     }
   },
   viewEdit: async (req, res) => {
