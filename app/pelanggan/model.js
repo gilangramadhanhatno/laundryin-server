@@ -1,24 +1,44 @@
 const mongoose = require("mongoose");
+const assert = require("assert");
 
 let pelangganSchema = mongoose.Schema({
   name: {
     type: String,
-    require: [true, "Nama pelanggan harus diisi"],
+    required: [true, "Nama pelanggan harus diisi"],
   },
   jenisKelamin: {
     type: String,
-    require: [true, "Jenis Kelamin harus diisi"],
+    required: [true, "Jenis Kelamin harus diisi"],
   },
   tel: {
     type: String,
-    // min: [6, "No telepon terlalu sedikit"],
-    // max: 12,
-    require: [true, "Nomor telepon harus diisi"],
+    required: [true, "Nomor telepon harus diisi"],
+    min: 8,
+    max: 13,
+    unique: true,
   },
   address: {
     type: String,
-    require: [true, "Alamat harus diisi"],
+    required: [true, "Alamat harus diisi"],
   },
 });
 
-module.exports = mongoose.model("Pelanggan", pelangganSchema);
+pelangganSchema.path("tel").validate(async (tel) => {
+  const telCount = await mongoose.models.Pelanggan.countDocuments({ tel });
+  return !telCount;
+}, "Nomor telepon sudah terdaftar");
+
+pelangganSchema.path("tel").validate(async (tel) => {
+  const telMin = await mongoose.models.Pelanggan.countDocuments({ tel });
+  return telMin < 8;
+}, "Nomor telepon terlalu sedikit");
+
+const Pelanggan = mongoose.model("Pelanggan", pelangganSchema);
+
+// const pelanggan = new Pelanggan({
+//   tel: 2,
+// });
+// const error = pelanggan.validateSync();
+// assert.equal(error.errors["tel"].message, "Nomor telepon terlalu sedikit");
+
+module.exports = Pelanggan;
