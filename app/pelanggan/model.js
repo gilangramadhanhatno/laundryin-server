@@ -13,7 +13,7 @@ let pelangganSchema = mongoose.Schema({
   tel: {
     type: String,
     required: [true, "Nomor telepon harus diisi"],
-    min: 8,
+    min: [8, "Nomor telepon terlalu sedikit"],
     max: 13,
     unique: true,
   },
@@ -27,11 +27,6 @@ pelangganSchema.path("tel").validate(async (tel) => {
   const telCount = await mongoose.models.Pelanggan.countDocuments({ tel });
   return !telCount;
 }, "Nomor telepon sudah terdaftar");
-
-pelangganSchema.path("tel").validate(async (tel) => {
-  const telMin = await mongoose.models.Pelanggan.countDocuments({ tel });
-  return telMin < 8;
-}, "Nomor telepon terlalu sedikit");
 
 const Pelanggan = mongoose.model("Pelanggan", pelangganSchema);
 
