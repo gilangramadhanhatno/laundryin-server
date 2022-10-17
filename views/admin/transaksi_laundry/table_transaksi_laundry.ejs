@@ -4,12 +4,11 @@
       <th>No</th>
       <!-- <th>ID Pelanggan</th> -->
       <th>Nama Pelanggan</th>
-      <th>Paket Laundry dan Jumlah Kiloan</th>
-      <!-- <th>Jumlah Kiloan</th> -->
-      <th>Total</th>
-      <th>Tanggal Terima</th>
-      <!-- <th>Status</th> -->
-      <!-- <th>Catatan</th> -->
+      <th>Nomor Telepon</th>
+      <th>Status Cuci</th>
+      <th>Status Pembayaran</th>
+      <!-- <th>Total</th> -->
+      <th>Tanggal Ambil</th>
       <th>Aksi</th>
     </tr>
   </thead>
@@ -18,11 +17,37 @@
       <td><%= i + 1 %></td>
       <!-- <td><%= transaksiLaundry[i]._id %></td> -->
       <td><%= transaksiLaundry[i]?.pelanggan?.name ?? "-" %></td>
-      <td><%= transaksiLaundry[i]?.paket?.name %> - <%= transaksiLaundry[i]?.paket?.waktuKerja%> - Rp.<%= parseInt(transaksiLaundry[i]?.paket?.harga).toLocaleString("id-ID") %> * <%= transaksiLaundry[i].jumlahKiloan %> kg</td>
-      <!-- <td>        kg</td> -->
-      <td>Rp.<%= parseInt(transaksiLaundry[i].jumlahKiloan * transaksiLaundry[i]?.paket?.harga).toLocaleString("id-ID") %></td>
-      <td><%= transaksiLaundry[i].tanggalTerima%></td>
-      <!-- <td><%= transaksiLaundry[i].status %></td> -->
+      <td><%= transaksiLaundry[i]?.pelanggan?.tel %></td>
+      <td>
+        <% if(transaksiLaundry[i].statusCuci === "belum dicuci") { %>
+          <h6>
+            <span class="badge badge-danger">belum dicuci</span>
+          </h6>
+          <% } else if(transaksiLaundry[i].statusCuci === "dicuci") { %>
+            <h6>
+              <span class="badge badge-warning">dicuci</span>
+            </h6>
+          <% } else { %>
+          <h6>
+            <span class="badge badge-success">selesai</span>
+          </h6>
+          <% } %></td>
+          <td>
+            <% if(transaksiLaundry[i].statusPembayaran === "belum bayar") { %>
+              <h6>
+                <span class="badge badge-danger">belum bayar</span>
+              </h6>
+              <% } else if(transaksiLaundry[i].statusCuci === "dicuci") { %>
+                <h6>
+                  <span class="badge badge-warning">dicuci</span>
+                </h6>
+              <% } else { %>
+              <h6>
+                <span class="badge badge-success">selesai</span>
+              </h6>
+              <% } %></td>
+      <!-- <td>Rp.<%= parseInt(transaksiLaundry[i].jumlahKiloan * transaksiLaundry[i]?.paket?.harga).toLocaleString("id-ID") %></td> -->
+      <td><%= transaksiLaundry[i].tanggalAmbil%></td>
       <!-- <td><%= transaksiLaundry[i].catatan %></td> -->
       <td>
         <form action="/transaksi-laundry/hapus/<%= transaksiLaundry[i]._id %>?_method=DELETE" method="post">

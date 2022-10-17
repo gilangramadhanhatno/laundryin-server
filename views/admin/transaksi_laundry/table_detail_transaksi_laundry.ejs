@@ -13,22 +13,7 @@
       <div class="col-md-4">
         <img src="http://localhost:3000/uploads/<%= transaksiLaundry.thumbnail %>" alt="image" style="width: 300px; display: block" />
 
-        <div class="row btn-status mt-3">
-          <% if(transaksiLaundry.status === "Sedang Diproses") { %>
-          <form action="/transaksi-laundry/status/<%= transaksiLaundry.id %>/konfirmasi?_method=PUT" method="post">
-            <button type="submit" class="btn btn-success btn-sm">
-              <i class="fas fa-check"></i>
-              Terima
-            </button>
-          </form>
-          <form action="/transaksi-laundry/status/<%= transaksiLaundry.id %>/tolak?_method=PUT" method="post">
-            <button type="submit" class="btn btn-danger btn-sm ml-2">
-              <i class="fas fa-times"></i>
-              Tolak
-            </button>
-          </form>
-          <% } %>
-        </div>
+        <div class="row btn-status mt-3"></div>
       </div>
       <div class="col-md-8">
         <div class="table-responsive">
@@ -36,13 +21,16 @@
             <thead>
               <tr>
                 <th>Nama Pelanggan</th>
+                <th>Nomor Telepon</th>
                 <th>Paket Laundry dan Jumlah Kiloan</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
               <td><%= transaksiLaundry.pelanggan.name %></td>
+              <td><%= transaksiLaundry.pelanggan.tel %></td>
               <td><%= transaksiLaundry.paket.name %> - <%= transaksiLaundry.paket.waktuKerja %> - Rp.<%= parseInt(transaksiLaundry.paket.harga).toLocaleString("id-ID") %> * <%= transaksiLaundry.jumlahKiloan %> kg</td>
+
               <td>Rp.<%= parseInt(transaksiLaundry.paket.harga * transaksiLaundry.jumlahKiloan).toLocaleString("id-ID") %></td>
             </tbody>
           </table>
@@ -50,29 +38,98 @@
           <table class="table table-bordered mt-4" id="dataTableActivity" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>Tanggal Terima</th>
-                <th>Status</th>
+                <th>Tanggal Ambil</th>
+                <th>Status Cuci</th>
                 <th>Catatan</th>
+                <th>Pencucian</th>
               </tr>
             </thead>
             <tbody>
-              <td><%= transaksiLaundry.tanggalTerima %></td>
+              <td><%= transaksiLaundry.tanggalAmbil %></td>
               <td>
-                <% if(transaksiLaundry.status === "Belum Bayar") { %>
+                <% if(transaksiLaundry.statusCuci === "belum dicuci") { %>
                 <h6>
-                  <span class="badge badge-danger">Belum Bayar</span>
+                  <span class="badge badge-danger">belum dicuci</span>
                 </h6>
-                <% } else if (transaksiLaundry.status === "Sedang Diproses") { %>
+                <% } else if(transaksiLaundry.statusCuci === "dicuci") { %>
                 <h6>
-                  <span class="badge badge-warning">Sedang Diproses</span>
+                  <span class="badge badge-warning">dicuci</span>
                 </h6>
                 <% } else { %>
                 <h6>
-                  <span class="badge badge-success">Sudah Bayar</span>
+                  <span class="badge badge-success">selesai</span>
                 </h6>
                 <% } %>
               </td>
               <td><% if(transaksiLaundry.catatan) { %> <%= transaksiLaundry.catatan %> <% } else { %> - <% } %></td>
+
+              <td>
+                <% if(transaksiLaundry.statusCuci === "belum dicuci") { %>
+                <form action="/transaksi-laundry/status-cuci/<%= transaksiLaundry.id %>/dicuci?_method=PUT" method="post">
+                  <button type="submit" class="btn btn-warning btn-circle btn-sm button-update">
+                    <i class="fa fa-retweet"></i>
+                    Dicuci
+                  </button>
+                </form>
+
+                <form action="/transaksi-laundry/status-cuci/<%= transaksiLaundry.id %>/selesai?_method=PUT" method="post">
+                  <button type="submit" class="btn btn-sm btn-success mb-1 mt-1">
+                    <i class="fa fa-check"></i>
+                    Selesai
+                  </button>
+                </form>
+                <% } else if (transaksiLaundry.statusCuci === "dicuci") { %>
+                <form action="/transaksi-laundry/status-cuci/<%= transaksiLaundry.id %>/selesai?_method=PUT" method="post">
+                  <button type="submit" class="btn btn-sm btn-success mb-1 mt-1">
+                    <i class="fa fa-check"></i>
+                    Selesai
+                  </button>
+                </form>
+                <% } else { %> - <% } %>
+              </td>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered mt-4" id="dataTableActivity" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Tanggal Antar</th>
+                <th>Status Pembayaran</th>
+                <th>Pembayaran</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <td><%= transaksiLaundry.tanggalAmbil %></td> -->
+              <td><%= transaksiLaundry.tanggalAntar %></td>
+              <td>
+                <% if(transaksiLaundry.statusPembayaran === "belum bayar") { %>
+                <h6>
+                  <span class="badge badge-danger">belum bayar</span>
+                </h6>
+                <% } else if(transaksiLaundry.statusPembayaran === "cash") { %>
+                <h6>
+                  <span class="badge badge-success">cash</span>
+                </h6>
+                <% } else { %>
+                <h6>
+                  <span class="badge badge-primary">transfer</span>
+                </h6>
+                <% } %>
+              </td>
+
+              <td>
+                <form action="" method="post">
+                  <a href="" class="btn btn-success btn-circle btn-sm button-update">
+                    <i class="fas fa-money-check-alt"></i>
+                    Cash</a
+                  >
+
+                  <button class="btn btn-sm btn-primary mb-1 mt-1">
+                    <i class="fa fa-exchange-alt"></i>
+                    Transfer
+                  </button>
+                </form>
+              </td>
             </tbody>
           </table>
         </div>

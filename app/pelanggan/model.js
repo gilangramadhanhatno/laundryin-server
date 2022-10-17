@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const assert = require("assert");
 
 let pelangganSchema = mongoose.Schema({
   name: {
@@ -13,8 +12,8 @@ let pelangganSchema = mongoose.Schema({
   tel: {
     type: String,
     required: [true, "Nomor telepon harus diisi"],
-    min: [8, "Nomor telepon terlalu sedikit"],
-    max: 13,
+    minLength: [8, "Nomor telepon terlalu sedikit"],
+    maxLength: [13, "Maksimal nomor telepon hanya sampai 13 karakter"],
     unique: true,
   },
   address: {
@@ -26,14 +25,6 @@ let pelangganSchema = mongoose.Schema({
 pelangganSchema.path("tel").validate(async (tel) => {
   const telCount = await mongoose.models.Pelanggan.countDocuments({ tel });
   return !telCount;
-}, "Nomor telepon sudah terdaftar");
+}, "Nomor telepon sudah terdaftar!");
 
-const Pelanggan = mongoose.model("Pelanggan", pelangganSchema);
-
-// const pelanggan = new Pelanggan({
-//   tel: 2,
-// });
-// const error = pelanggan.validateSync();
-// assert.equal(error.errors["tel"].message, "Nomor telepon terlalu sedikit");
-
-module.exports = Pelanggan;
+module.exports = mongoose.model("Pelanggan", pelangganSchema);

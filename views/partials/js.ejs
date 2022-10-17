@@ -73,7 +73,11 @@
 
     
     //Date and time picker
-    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+    $('#reservationdatetime').datetimepicker({ 
+      // timePicker: true,
+      // datetimepicker: true,
+      format: "DD/MM/YYYY  h:mm A",
+      icons: { time: 'far fa-clock' } });
 
     // var Toast = Swal.mixin({
     //   toast: true,

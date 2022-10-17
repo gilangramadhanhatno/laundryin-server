@@ -54,7 +54,7 @@ module.exports = {
   },
   actionCreate: async (req, res) => {
     try {
-      const { pelanggan, paket, jumlahKiloan, tanggalTerima, catatan } = req.body;
+      const { pelanggan, paket, jumlahKiloan, tanggalAmbil, catatan } = req.body;
 
       if (req.file) {
         let tmp_path = req.file.path;
@@ -73,7 +73,7 @@ module.exports = {
               pelanggan,
               paket,
               jumlahKiloan,
-              tanggalTerima,
+              tanggalAmbil,
               catatan,
               thumbnail: filename,
             });
@@ -96,7 +96,7 @@ module.exports = {
           pelanggan,
           paket,
           jumlahKiloan,
-          tanggalTerima,
+          tanggalAmbil,
           catatan,
         });
 
@@ -140,7 +140,7 @@ module.exports = {
   actionEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const { pelanggan, paket, jumlahKiloan, tanggalTerima, catatan } = req.body;
+      const { pelanggan, paket, jumlahKiloan, tanggalAmbil, catatan } = req.body;
 
       if (req.file) {
         let tmp_path = req.file.path;
@@ -168,7 +168,7 @@ module.exports = {
                 pelanggan,
                 paket,
                 jumlahKiloan,
-                tanggalTerima,
+                tanggalAmbil,
                 catatan,
                 thumbnail: filename,
               }
@@ -192,7 +192,7 @@ module.exports = {
             pelanggan,
             paket,
             jumlahKiloan,
-            tanggalTerima,
+            tanggalAmbil,
             catatan,
           }
         );
@@ -254,14 +254,14 @@ module.exports = {
       res.redirect("/transaksi-laundry");
     }
   },
-  actionKonfirmasi: async (req, res) => {
+  actionCuci: async (req, res) => {
     try {
       const { id } = req.params;
       const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
-      transaksiLaundry.status = "Sudah Bayar";
+      transaksiLaundry.statusCuci = "dicuci";
       await transaksiLaundry.save();
 
-      req.flash("alertMessage", `Berhasil konfirmasi transaksi laundry ${transaksiLaundry.pelanggan.name}`);
+      req.flash("alertMessage", `Pakaian/laundry "${transaksiLaundry.pelanggan.name}" sedang dicuci`);
       req.flash("alertStatus", "success");
       req.flash("alertIcon", "fas fa-check");
       res.redirect(`/transaksi-laundry/detail/${id}`);
@@ -269,18 +269,17 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       req.flash("alertIcon", "fas fa-ban");
-      res.redirect(`/transaksi-laundry/${id}`);
+      res.redirect(`/transaksi-laundry/detail/${id}`);
     }
   },
-  actionTolak: async (req, res) => {
+  actionSelesaiCuci: async (req, res) => {
     try {
       const { id } = req.params;
       const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
-
-      transaksiLaundry.status = "Belum Bayar";
+      transaksiLaundry.statusCuci = "selesai";
       await transaksiLaundry.save();
 
-      req.flash("alertMessage", `Berhasil tolak transaksi laundry ${transaksiLaundry.pelanggan.name}`);
+      req.flash("alertMessage", `Pakaian/laundry "${transaksiLaundry.pelanggan.name}" selesai dicuci`);
       req.flash("alertStatus", "success");
       req.flash("alertIcon", "fas fa-check");
       res.redirect(`/transaksi-laundry/detail/${id}`);
@@ -288,7 +287,26 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       req.flash("alertIcon", "fas fa-ban");
-      res.redirect(`/transaksi-laundry/${id}`);
+      res.redirect(`/transaksi-laundry/detail/${id}`);
     }
   },
+  // actionTolak: async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
+
+  //     transaksiLaundry.status = "Belum Bayar";
+  //     await transaksiLaundry.save();
+
+  //     req.flash("alertMessage", `Berhasil tolak transaksi laundry ${transaksiLaundry.pelanggan.name}`);
+  //     req.flash("alertStatus", "success");
+  //     req.flash("alertIcon", "fas fa-check");
+  //     res.redirect(`/transaksi-laundry/detail/${id}`);
+  //   } catch (error) {
+  //     req.flash("alertMessage", `${error.message}`);
+  //     req.flash("alertStatus", "danger");
+  //     req.flash("alertIcon", "fas fa-ban");
+  //     res.redirect(`/transaksi-laundry/${id}`);
+  //   }
+  // },
 };
