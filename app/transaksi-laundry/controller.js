@@ -290,23 +290,4 @@ module.exports = {
       res.redirect(`/transaksi-laundry/detail/${id}`);
     }
   },
-  // actionTolak: async (req, res) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const transaksiLaundry = await TransaksiLaundry.findOne({ _id: id }).populate("pelanggan").populate("paket");
-
-  //     transaksiLaundry.status = "Belum Bayar";
-  //     await transaksiLaundry.save();
-
-  //     req.flash("alertMessage", `Berhasil tolak transaksi laundry ${transaksiLaundry.pelanggan.name}`);
-  //     req.flash("alertStatus", "success");
-  //     req.flash("alertIcon", "fas fa-check");
-  //     res.redirect(`/transaksi-laundry/detail/${id}`);
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", "danger");
-  //     req.flash("alertIcon", "fas fa-ban");
-  //     res.redirect(`/transaksi-laundry/${id}`);
-  //   }
-  // },
 };
